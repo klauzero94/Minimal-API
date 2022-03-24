@@ -1,6 +1,7 @@
 using Data;
 using Data.Collections;
 using MongoDB.Driver;
+using Outputs;
 using Utils;
 
 namespace Routes;
@@ -25,7 +26,11 @@ public class UserRoutes
             return Results.Ok(new ResponseBase(
                 "200", true
             ));
-        });
+        })
+        .Produces<ResponseBase>(StatusCodes.Status200OK)
+        .Produces<ResponseBase<object, ErrorOutput>>(StatusCodes.Status500InternalServerError)
+        .WithName("GetAll")
+        .WithTags("User");
 
         await Task.CompletedTask;
     }
